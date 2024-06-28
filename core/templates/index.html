@@ -1,0 +1,56 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Tabela de Produtos</h2>
+            <a href="{% url 'produto' %}" class="btn btn-primary">Cadastrar novo produto</a>
+        </div>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Estoque</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td><a href="#modal{{produto.id}}" data-toggle="modal">{{ produto.nome }}</a></td>
+                    <td>R$ {{ produto.preco }}</td>
+                    <td>{{ produto.estoque }}</td>
+                </tr>
+                <div class="modal fade bd-example-modal-lg show" id="modal{{produto.id}}" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div>
+                                    <h4>{{ produto.nome }}</h4>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="dynamic-content">
+                                <img src="{{ produto.imagem.url }}" class="img-fluid" alt="{{produto.nome}}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% bootstrap_javascript jquery='full' %}
+</body>
+</html>
