@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Produto</h1>
-        {% bootstrap_messages %}
+        <!-- {% bootstrap_messages %} -->
 
         <form action="{% url 'produto' %}" method="post" class="form" autocomplete="off" enctype="multipart/form-data"> <!--enctype é utilizado para forms com upload de arquivo-->
             {% csrf_token %}

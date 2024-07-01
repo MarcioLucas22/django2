@@ -1,0 +1,30 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{produto.nome}}</title>
+    {% bootstrap_css %}
+</head>
+<body>
+    <div class="container">
+        <h1>{{produto.nome}}</h1>
+
+        <form action="{% url 'edita_produto' produto.id %}" method="post" class="form" autocomplete="off" enctype="multipart/form-data"> <!--enctype é utilizado para forms com upload de arquivo-->
+            {% csrf_token %}            
+            {% bootstrap_field form.nome %}
+            {% bootstrap_field form.preco %}
+            {% bootstrap_field form.estoque %}
+            <div class="mb-3">
+                <!-- <label for="{{ form.imagem.id_for_label }}" class="form-label">Escolha uma nova imagem</label> -->
+                <input type="file" name="imagem" id="{{ form.imagem.id_for_label }}" class="custom-class" value="{{ form.email.value }}">
+            </div>
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Editar</button>
+            {% endbuttons %}
+        </form>
+    </div>
+    {% bootstrap_javascript jquery='full' %}
+</body>
+</html>

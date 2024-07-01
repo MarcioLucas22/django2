@@ -1,11 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import ContatoForm, ProdutoModelForm
 from django.http import HttpRequest, HttpResponseRedirect
 from django.contrib import messages
 from .models import Produto
 from django.urls import reverse
-
-
 
 def index(request: HttpRequest):
     produtos = Produto.objects.all()
@@ -51,3 +49,37 @@ def produto(request: HttpRequest):
         'form': form
     }
     return render(request, 'produto.html', context)
+
+def exclui_produto(request: HttpRequest, id_produto):
+    produto = get_object_or_404(Produto, pk=id_produto)
+
+    if request.method == 'POST':
+        produto.delete()
+        return HttpResponseRedirect(reverse('index'))
+
+    context = {
+        'produto': produto
+    }
+
+    return render(request, 'index.html', context)
+
+def edita_produto(request: HttpRequest, id_produto):
+    produto = get_object_or_404(Produto, pk=id_produto)
+    if str(request.method) == 'POST':
+        form = ProdutoModelForm(request.POST, request.FILES, instance=produto)
+        if form.is_valid():            
+            form.save()
+
+            messages.success(request, 'Produto editado com sucesso.')
+            form = ProdutoModelForm()
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            messages.error(request, 'Erro ao editar produto.')
+    else:
+        form = ProdutoModelForm(instance=produto)
+
+    context = {
+        'form': form,
+        'produto': produto,
+    }
+    return render(request, 'edita_produto.html', context)

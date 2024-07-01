@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'core', # !!!
     'bootstrap4', # !!!
     'stdimage', # !!!
+    'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [
@@ -66,17 +67,22 @@ WSGI_APPLICATION = 'django2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', # !!!
+#         'NAME': 'django2', # !!!
+#         'USER': 'root', # !!!
+#         'PASSWORD': '123456', # !!!
+#         'HOST': 'localhost', # !!!
+#         'PORT': '3306', # !!!
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # !!!
-        'NAME': 'django2', # !!!
-        'USER': 'root', # !!!
-        'PASSWORD': '123456', # !!!
-        'HOST': 'localhost', # !!!
-        'PORT': '3306', # !!!
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
